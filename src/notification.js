@@ -7,7 +7,7 @@ module.exports.pushByServiceAccount = function (message) {
 
 /**
  * Push FCM message with googleapis using gapis key
- * https://firebase.google.com/docs/cloud-messaging/send-message#send_messages_using_the_legacy_app_server_protocols
+ * https://firebase.google.com/docs/cloud-messaging/send-message#send_using_the_fcm_legacy_http_api
  * @returns {Promise}
  */
 module.exports.pushByServerKey = ({

@@ -5,3 +5,4 @@
 /credentials/*
 
 !/**/.gitkeep
+!/**/README.md

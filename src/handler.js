@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const mime = require('mime-types')
 const notification = require('./notification')
-const firebaseConfig = require('./credentials/firebaseConfig.json')
+const firebaseConfig = require('../credentials/firebase-config.json')
 
 /**
  * Get view/assets
@@ -16,12 +16,12 @@ module.exports.get = (req, res) => {
     .normalize(req.url.split('?').shift())
     .replace(/^(\.\.[/\\])+/, '')
 
-  let pathname = path.join(__dirname, 'public', sanitizePath)
+  let pathname = path.join(__dirname, '..', 'public', sanitizePath)
 
   // if !exist || is a directory, then look for ./public/index.html
   const exist = fs.existsSync(pathname)
   if (!exist || fs.statSync(pathname).isDirectory()) {
-    pathname = path.join(__dirname, 'public', 'index.html')
+    pathname = path.join(__dirname, '..', 'public', 'index.html')
   }
 
   // read file from file system
