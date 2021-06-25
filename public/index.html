@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
+    <!-- jquery -->
+    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- toastr -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+    <!-- firebase -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
+    <script defer src="/firebase-initial.js"></script>
+  </head>
+
+  <body>
+    <h1>
+      <strong>Open DevTools/Console for more information.</strong>
+    </h1>
+
+    <div>
+      <form action="/" method="post">
+        <div>
+          <label for="title">Title</label>
+        <div>
+        </div>
+          <input type="text" id="title" name="title" required placeholder="Notification title">
+        </div>
+        <hr>
+
+        <div>
+          <label for="body">Body</label>
+        <div>
+        </div>
+          <textarea id="body" name="body" required placeholder="Notification body" cols="30" rows="10"></textarea>
+        </div>
+        <hr>
+
+        <div>
+          <input type="radio" id="service-account" name="by" value="service-account" checked>
+          <label for="service-account">Push by service account</label>
+        </div>
+        <div>
+          <input type="radio" id="FCM-server-key" name="by" value="FCM-server-key">
+          <label for="FCM-server-key">Push by FCM server key</label>
+        </div>
+        <hr>
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+      </form>
+    </div>
+
+    <!-- form handler -->
+    <script >
+      window.addEventListener('DOMContentLoaded', function() {
+        $('form').on('submit', function (event) {
+          event.preventDefault()
+
+          const payload = {
+            title: $('#title').val(),
+            body: $('#body').val(),
+            by: $('[name="by"]:checked').val(),
+            fcmToken: window.getFcmToken()
+          }
+
+          $.ajax({
+            url: '/',
+            method: 'POST',
+            data: payload,
+            success(response, status, xhr) {
+              // console.log({ response, status, xhr })
+            },
+            error(xhr, status, message) {
+              toastr.error(xhr.responseJSON && xhr.responseJSON.message || message)
+            }
+          })
+        })
+      })
+    </script>
+  </body>
+</html>
