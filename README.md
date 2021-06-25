@@ -22,7 +22,7 @@ cp .env.example .env
 
 ### Config FCM server key in `.env`
 
-To [using the FCM legacy HTTP API](https://firebase.google.com/docs/cloud-messaging/send-message#send_using_the_fcm_legacy_http_api) your must replace `FCM_SERVER_KEY` in `.env` with your firebase server key
+To [using the FCM legacy HTTP API](https://firebase.google.com/docs/cloud-messaging/send-message#send_using_the_fcm_legacy_http_api) you must replace `FCM_SERVER_KEY` in `.env` with your firebase server key
 
 ```bash
 FCM_SERVER_KEY=[your-FCM-server-key]
