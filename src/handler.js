@@ -48,10 +48,11 @@ module.exports.get = (req, res) => {
  * Push notification
  */
 module.exports.post = async (req, res) => {
-  const { fcmToken = 'fake-FCM-token', via, title, body } = req.body
+  const { fcmToken = 'FCM-token-placeholder', via, title, body } = req.body
 
-  const onSuccess = () => {
-    res.statusCode = 204
+  const onSuccess = (result) => {
+    res.writeHead(201, { 'Content-Type': 'application/json' })
+    res.write(JSON.stringify(result))
     return res.end()
   }
 

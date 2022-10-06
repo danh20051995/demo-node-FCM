@@ -51,7 +51,7 @@ module.exports.pushByServerKey = ({
       res.on('data', (chunk) => body.push(chunk))
       res.on('end', () => {
         const resString = Buffer.concat(body).toString()
-        resolve(resString)
+        resolve(JSON.parse(resString))
       })
     })
 
