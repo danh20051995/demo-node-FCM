@@ -30,12 +30,14 @@ navigator
       .getToken()
       .then((fcmToken) => {
         toastr.success('Get FCM token successfully!')
-        console.log({ fcmToken })
+        document.getElementById('fcm-token').innerHTML = fcmToken
+        document.getElementById('fcm-token').style.display = ''
         window.getFcmToken = function () {
           return fcmToken
         }
       })
       .catch((error) => {
+        document.getElementById('fcm-token').style.display = 'none'
         toastr.error(error.message, 'Get FCM token error')
         throw error
       })

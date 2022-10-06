@@ -4,9 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>FCM demo</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
+    <style>
+      pre#fcm-token {
+        font-size: 12px;
+        border: 1px solid red;
+        border-radius: 5px;
+        width: 99%;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        padding: 5px;
+        background: #e4e4e4;
+      }
+    </style>
+
+    <!-- window.Utils -->
+    <script defer src="/utils.js"></script>
 
     <!-- jquery -->
     <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -23,6 +39,7 @@
 
   <body>
     <h1>
+      <pre id="fcm-token" style="display: none;"></pre>
       <strong>Open DevTools/Console for more information.</strong>
     </h1>
 
@@ -84,6 +101,10 @@
             }
           })
         })
+      })
+
+      document.getElementById('fcm-token')?.addEventListener('click', function () {
+        window.Utils.copy(this.innerText)
       })
     </script>
   </body>
