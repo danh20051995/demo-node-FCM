@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
 
     <style>
+      body {
+        margin: 0;
+        padding: 16px;
+      }
+      textarea, input[type="text"] {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
       pre#fcm-token {
         font-size: 12px;
         border: 1px solid red;
@@ -46,17 +55,25 @@
     <div>
       <form action="/" method="post">
         <div>
-          <label for="title">Title</label>
-        <div>
+          <label for="fcm-token">Your FCM token (optional)</label>
         </div>
+        <div>
+          <textarea id="fcm-token" name="fcmToken" placeholder="Your FCM token" cols="30" rows="2"></textarea>
+        </div>
+        <hr>
+
+        <div>
+          <label for="title">Title</label>
+        </div>
+        <div>
           <input type="text" id="title" name="title" required placeholder="Notification title">
         </div>
         <hr>
 
         <div>
           <label for="body">Body</label>
-        <div>
         </div>
+        <div>
           <textarea id="body" name="body" required placeholder="Notification body" cols="30" rows="10"></textarea>
         </div>
         <hr>
@@ -86,7 +103,7 @@
             title: $('#title').val(),
             body: $('#body').val(),
             via: $('[name="via"]:checked').val(),
-            fcmToken: window.getFcmToken()
+            fcmToken: document.querySelectorAll('textarea[name="fcmToken"]')[0].value.trim() || window.getFcmToken()
           }
 
           $.ajax({
