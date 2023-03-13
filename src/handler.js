@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const mime = require('mime-types')
+const html2Text = require('html-to-text').compile()
 const notification = require('./notification')
 const firebaseConfig = require('../credentials/firebase-config.json')
 
@@ -68,8 +69,8 @@ module.exports.post = async (req, res) => {
       random: Math.random()
     },
     notification: {
-      title,
-      body
+      title: html2Text(title),
+      body: html2Text(body)
     },
     token: fcmToken
   }

@@ -38,9 +38,14 @@ function pushNotification(message) {
 
   const _data = normalizeData(data)
   const timestamp = new Date().toISOString()
+  const imageUrl = 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png'
+  const notificationCount = Math.floor(Math.random() * 100)
 
-  // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
-  const messageInfo = {
+  /**
+   * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
+   * @type {import('firebase-admin/lib/messaging/messaging-api').BaseMessage}
+   */
+  const fcmMessage = {
     ...message,
 
     // data accept string only
@@ -48,8 +53,10 @@ function pushNotification(message) {
     notification,
     // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#AndroidConfig
     android: {
-      priority: 'NORMAL',
-      notification,
+      notification: {
+        imageUrl,
+        notificationCount
+      },
       data: {
         ..._data,
         platform: 'Android',
@@ -58,28 +65,35 @@ function pushNotification(message) {
     },
     // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#WebpushConfig
     webpush: {
-      notification,
+      notification: {
+        ...notification,
+        icon: imageUrl,
+        badge: imageUrl,
+      },
       // data accept string only
       data: {
         ..._data,
-        platform: 'webpush',
+        platform: 'WebPush',
         time: timestamp,
       },
     },
     // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#ApnsConfig
     // Payload of Apple Push Notification Service must contain an [aps] key.
-    // apns: {
-    //   payload: {
-    //     ..._data,
-    //     platform: 'apns',
-    //     time: timestamp,
-    //   },
-    // },
+    apns: {
+      fcmOptions: {
+        imageUrl
+      },
+      payload: {
+        aps: {
+          badge: notificationCount
+        }
+      }
+    },
   }
 
   return firebase
     .messaging()
-    .send(messageInfo)
+    .send(fcmMessage)
     .catch((error) => {
       if (error.code === 'messaging/registration-token-not-registered') {
         console.log('Token invalid.')
